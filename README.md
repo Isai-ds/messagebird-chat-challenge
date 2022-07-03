@@ -1,18 +1,40 @@
-# Salesforce DX Project: Next Steps
+# Message Bird Chatter
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+Chat solution using MessageBird APIs and MessageBird Whatsapp Sandbox. To test the solution you need to have an MessageBird account. If you don't have, you can create a new one using next [link](https://dashboard.messagebird.com/sign-up/).
+Once logged in your Message bird account, the next step is activate your whatsapp account. Please follow the next instruccions [Whatsapp Sandbox](https://support.messagebird.com/hc/en-us/articles/360002109957-Start-testing-with-the-MessageBird-WhatsApp-Sandbox).
 
-## How Do You Plan to Deploy Your Changes?
+## Installing the App using a Developer Edition Org
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+Follow this set of instrucctios to install the unamed package in a [free Developer Edition Org](https://developer.salesforce.com/signup). We remommend start from a Brand-new environment to avoid conflicts with any previous work. To execute next commands you need to have sfdx-cli package installed.
 
-## Configure Your Salesforce DX Project
+1. Download the zip package to a directory of your choise. Open your terminal and change the directory where you downloaded your package previously
+2. Authorize your Developer org and provide it with alias, for example myorg
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+```
+ sfdx auth:web:login -s -a mydevorg
+```
+
+3. Run this command to deploy the app
+
+```
+sfdx force:mdapi:deploy --zipfile mdapi.zip --testlevel RunLocalTests --wait 10 -u myorg
+```
+
+4. Assign the MessageBirdAdmin permission set to the default user
+
+```
+sfdx force:user:permset:assign -n MessageBirdAdmin -u myorg
+```
+
+5. If your org isn’t already open, opent it now
+
+```
+sfdx force:org:open -u mydevorg
+```
+
+6. In App Launche, select the Message Bird Admin App to continue with next configuration.
 
 ## Read All About It
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
 - [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
 - [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
