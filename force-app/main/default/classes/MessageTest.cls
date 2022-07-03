@@ -137,4 +137,30 @@ public with sharing class MessageTest {
       'Id invalid'
     );
   }
+
+  @isTest
+  public static void Should_ThrowError_When_Get500() {
+    String response = '{"id":"b2b019223808411ba80d3dd178112cc7","conversationId":"54379be50f4646c98c5cc32fbb030846","platform":"whatsapp_sandbox","to":"+447418310508","from":"+5215514395236","channelId":"313874cd486c4309ac49b87efef7c111","type":"text","content":{"text":"Hello!"},"direction":"received","status":"received","createdDatetime":"2022-06-28T17:46:23.347Z","updatedDatetime":"2022-06-28T17:46:12Z"}';
+    Test.setMock(
+      HttpCalloutMock.class,
+      new MessageBirdRestMockUp(
+        MessageBirdRestMockUp.MockOption.SERVER_FAILED,
+        response
+      )
+    );
+
+    try {
+      WhatsAppChannel channel = new WhatsAppChannel(ACCESS_KEY);
+      WhatsAppHandler handler = new WhatsAppHandler(channel);
+      Map<String, Object> params = new Map<String, Object>{
+        'channelId' => '313874cd486c4309ac49b87efef7c111',
+        'type' => 'text',
+        'content' => new Map<String, String>{ 'text' => 'Hello!' }
+      };
+      Message c = handler.reply('54379be50f4646c98c5cc32fbb030846', params);
+      MessageResource resource = c.getResource();
+    } catch (Exception e) {
+      System.assert(true);
+    }
+  }
 }
