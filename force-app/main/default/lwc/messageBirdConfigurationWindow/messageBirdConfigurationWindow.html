@@ -1,0 +1,32 @@
+<template>
+  <lightning-card
+    if:true={contact.data}
+    title="Contact Setup"
+    icon-name="standard:record"
+  >
+    <div class="slds-grid">
+      <div class="slds-col slds-size_1-of-1">
+        <lightning-input
+          label="Name"
+          value={contact.data.fields.Name.value}
+          disabled=""
+        ></lightning-input>
+        <lightning-input
+          type="tel"
+          pattern="\+[0-9]+"
+          data-lwc-id="mobilephone"
+          label="Mobile Phone"
+          value={contact.data.fields.MobilePhone.value}
+          required="true"
+        ></lightning-input>
+      </div>
+    </div>
+    <div class="slds-var-m-top_medium">
+      <lightning-button
+        variant="brand"
+        label="Start Configuration"
+        onclick={handleOnSubmit}
+      ></lightning-button>
+    </div>
+  </lightning-card>
+</template>

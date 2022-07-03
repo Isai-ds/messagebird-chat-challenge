@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>USA (+1)</fullName>
+        <default>false</default>
+        <label>USA</label>
+    </customValue>
+    <customValue>
+        <fullName>MEX (+521)</fullName>
+        <default>false</default>
+        <label>MEX</label>
+    </customValue>
+    <customValue>
+        <fullName>CAN (+1)</fullName>
+        <default>false</default>
+        <label>CAN</label>
+    </customValue>
+    <masterLabel>Message Bird Country Codes</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

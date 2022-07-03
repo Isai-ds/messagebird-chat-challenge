@@ -1,0 +1,14 @@
+.chat-message-outbound__meta {
+  color: var(--lwc-colorTextWeak), rgb(255, 255, 255);
+  float: right;
+  margin: var(--lwc-spacingXxxSmall, 0.125rem) 0 0
+    var(--lwc-spacingXSmall, 0.5rem);
+  font-size: 0.55rem;
+}
+
+.chat-message-inbound__meta {
+  color: var(--lwc-colorTextWeak), rgb(68, 68, 68);
+  margin: var(--lwc-spacingXxxSmall, 0.125rem) 0 0
+    var(--lwc-spacingXSmall, 0.5rem);
+  font-size: 0.55rem;
+}

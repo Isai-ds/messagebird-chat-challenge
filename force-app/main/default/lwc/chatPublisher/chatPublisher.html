@@ -1,0 +1,35 @@
+<!-- sldsValidatorIgnore -->
+<template>
+  <div class="slds-media slds-comment slds-hint-parent">
+    <div class="slds-media__figure">
+      <lightning-avatar
+        initials={_initials}
+        fallback-icon-name="standard:avatar"
+        alternative-text={_userName}
+      ></lightning-avatar>
+    </div>
+    <div class="slds-media__body">
+      <div class="slds-publisher slds-publisher_comment slds-is-active">
+        <label for="comment-text-input-01" class="slds-assistive-text"
+          >Type a new message</label
+        >
+        <textarea
+          data-lwc-id="message"
+          class="slds-publisher__input slds-input_bare slds-text-longform"
+          placeholder="Type a new message"
+          onkeyup={handleKeyChange}
+        ></textarea>
+        <div class="slds-publisher__actions slds-grid slds-grid_align-end">
+          <div class="slds-float_right">
+            <lightning-button-icon
+              icon-name="utility:send"
+              variant="container"
+              alternative-text="send"
+              onclick={send}
+            ></lightning-button-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

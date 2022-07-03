@@ -1,0 +1,25 @@
+<template>
+  <li if:true={isInbound} class="slds-chat-listitem slds-chat-listitem_inbound">
+    <div class="slds-chat-message">
+      <div class="slds-chat-message__body">
+        <div class="slds-chat-message__text slds-chat-message__text_inbound">
+          <span>{message.content.text}</span>
+          <div class="chat-message-inbound__meta">{message.localTime}</div>
+        </div>
+      </div>
+    </div>
+  </li>
+  <li
+    if:true={isOutbound}
+    class="slds-chat-listitem slds-chat-listitem_outbound"
+  >
+    <div class="slds-chat-message">
+      <div class="slds-chat-message__body">
+        <div class="slds-chat-message__text slds-chat-message__text_outbound">
+          <span>{message.content.text}</span>
+          <div class="chat-message-outbound__meta">{message.localTime}</div>
+        </div>
+      </div>
+    </div>
+  </li>
+</template>

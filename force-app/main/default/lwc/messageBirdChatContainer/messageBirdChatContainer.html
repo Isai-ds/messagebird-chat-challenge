@@ -1,0 +1,44 @@
+<template>
+  <section role="log" class="slds-chat">
+    <ul class="slds-chat-list">
+      <li class="slds-chat-listitem slds-chat-listitem_bookend">
+        <div class="slds-chat-bookend">
+          <!-- sldsValidatorIgnoreNextLine -->
+          <p>Message Bird Chat</p>
+          <lightning-button-icon
+            class="red-icon"
+            if:true={notificator}
+            data-lwc-id="notificator"
+            icon-name="utility:chat"
+            size="x-small"
+            icon-class="inbound_notiffcation"
+            alternative-text="chat"
+            title="chat"
+            onclick={handleShowLastNotifications}
+          ></lightning-button-icon>
+        </div>
+      </li>
+      <div
+        data-lwc-id="scroll"
+        class="slds-scrollable_y"
+        style="height: 25rem"
+        onscroll={handleOnScroll}
+      >
+        <template for:each={messages} for:item="message">
+          <c-message-bird-chat-message
+            key={message.id}
+            message={message}
+          ></c-message-bird-chat-message>
+        </template>
+      </div>
+      <li class="slds-chat-listitem slds-chat-listitem_bookend">
+        <div
+          class="slds-chat-bookend slds-chat-bookend_stop"
+          style="display: block"
+        >
+          <slot> </slot>
+        </div>
+      </li>
+    </ul>
+  </section>
+</template>

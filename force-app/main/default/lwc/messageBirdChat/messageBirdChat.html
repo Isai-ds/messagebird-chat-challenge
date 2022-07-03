@@ -1,0 +1,26 @@
+<template>
+  <lightning-spinner
+    if:true={_spinner}
+    alternative-text="Loading"
+    size="small"
+  ></lightning-spinner>
+  <c-message-bird-configuration-window
+    if:true={_displayWindowSetup}
+    record-id={recordId}
+    object-api-name={objectApiName}
+    onconfigure={handleOnConfigure}
+  ></c-message-bird-configuration-window>
+  <template if:true={_displayChat}>
+    <c-message-bird-chat-container
+      if:true={messages.data}
+      messages={messages.data}
+      onquerymorebirdmessages={handleOnScrollmessages}
+    >
+      <c-chat-publisher
+        if:true={user.data}
+        user-name={user.data.Name}
+        onsend={handleOnSend}
+      ></c-chat-publisher>
+    </c-message-bird-chat-container>
+  </template>
+</template>

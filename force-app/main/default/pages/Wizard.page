@@ -1,0 +1,356 @@
+<apex:page controller="Wizard" lightningStylesheets="true" docType="html-5.0">
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+  <apex:slds />
+  <script>
+    function close() {
+      $("#imagePopup").attr("src", "");
+      $("#popup").removeClass("slds-show");
+      $("#popup").addClass("slds-hide");
+      $("#popupBackground").addClass("slds-hide");
+      $("#popupBackground").removeClass("slds-show");
+    }
+    function saveSiteUrl() {
+      let val = $("#siteUrl").val().trim();
+      $("#error-siteUrl").addClass("slds-hide");
+      $("#formSiteUrl").removeClass("slds-has-error");
+      if (val) {
+        val = val.charAt(val.length - 1) === "/" ? val.slice(0, -1) : val;
+        createWebHook(val);
+      } else {
+        $("#error-siteUrl").removeClass("slds-hide");
+        $("#formSiteUrl").addClass("slds-has-error");
+      }
+    }
+    $(function () {
+      $("#closePopUp").click(function () {
+        close();
+      });
+
+      $(".fetch-image").click(function () {
+        $("#imagePopup").attr("src", $(this).data("urlImage"));
+        $("#popup").removeClass("slds-hide");
+        $("#popup").addClass("slds-show");
+        $("#popupBackground").addClass("slds-show");
+        $("#popupBackground").removeClass("slds-hide");
+      });
+    });
+  </script>
+  <style></style>
+  <div class="slds-scope">
+    <apex:form id="wizardForm">
+      <apex:pageMessages />
+      <apex:actionFunction
+        name="createWebHook"
+        action="{!saveSiteUrl}"
+        reRender="wizardForm"
+      >
+        <apex:param
+          name="siteUrlParam"
+          assignTo="{!siteUrl}"
+          value=""
+        ></apex:param>
+      </apex:actionFunction>
+      <apex:pageBlock>
+        <apex:pageBlockSection
+          title="Domain Activation"
+          columns="1"
+          collapsible="true"
+        >
+          <div class="slds-text-heading_small">
+            The Message bird chat uses Lightning Web Components technology.
+            Before to use it we need to create a custom domain
+          </div>
+          <ul class="slds-list_ordered slds-has-dividers_bottom-space">
+            <li>
+              Click next
+              <a href="/lightning/setup/OrgDomain/home" target="_blank">link</a>
+              to start the configuration
+            </li>
+            <li>Click on Edit button</li>
+            <li>
+              Enter a new domain name and click on <b>Check Availability</b>
+              <a
+                class="fetch-image"
+                data-url-image="{!URLFOR($Resource.Wizard,'Resources/images/1_domain_01.png')}"
+                href="javascript: void(0);"
+                >View image</a
+              >
+            </li>
+            <li>
+              Click on Save. You will see a pop up message read it and click on
+              Accept
+            </li>
+            <li>
+              The process will take some time. You will receive an email from
+              support@salesforce.com when the job done
+            </li>
+            <li>
+              Resfresh the page and click on <b>Deploy New domain</b>. You will
+              need to login again
+              <a
+                class="fetch-image"
+                data-url-image="{!URLFOR($Resource.Wizard,'Resources/images/1_domain_02.png')}"
+                href="javascript: void(0);"
+                >View image</a
+              >
+            </li>
+          </ul>
+        </apex:pageBlockSection>
+      </apex:pageBlock>
+      <apex:pageBlock>
+        <apex:pageBlockButtons location="bottom">
+          <apex:commandButton action="{!saveSiteUrl}" value="Save" />
+        </apex:pageBlockButtons>
+        <apex:pageBlockSection
+          title="Messagebird Account Configuration"
+          columns="1"
+          collapsible="true"
+        >
+          <div class="slds-text-heading_small">
+            Now we need to configure the MessageBird account
+          </div>
+          <ul class="slds-list_ordered slds-has-dividers_bottom-space">
+            <li>
+              As first step is open the object configuration. This object saves
+              the MessageBirdAccount information
+            </li>
+            <li>
+              Go to
+              <a href="/lightning/setup/CustomMetadata/home" target="_blank"
+                >All Custom Metadata Types menu</a
+              >
+            </li>
+            <li>
+              Search the custom metadata named <b>MessageBirdConfiguration</b>
+            </li>
+            <li>Click on <b>Manage Records</b></li>
+            <li>
+              Click on <b>WhatsAppChannel.</b> Keep this window open. It will be
+              used to edit the data with your MessageBirdAccount information
+            </li>
+            <li>
+              Login to
+              <a href="https://dashboard.messagebird.com/" target="_blank"
+                >MessageBird</a
+              >
+            </li>
+            <li>
+              Go to
+              <a href="https://dashboard.messagebird.com/developers/settings"
+                >developers</a
+              >
+              option
+            </li>
+            <li>Go to API access</li>
+            <li>
+              Click on Show key for Live API Key
+              <a
+                class="fetch-image"
+                data-url-image="{!URLFOR($Resource.Wizard,'Resources/images/3_mb_01.png')}"
+                href="javascript: void(0);"
+                >View image</a
+              >
+            </li>
+            <li>Copy the key and paste it into AccessKey box</li>
+            <li>
+              Go to
+              <a href="https://dashboard.messagebird.com/whatsapp/sandbox"
+                >WhatsApp sandbox</a
+              >
+            </li>
+            <li>
+              To get the channel id start a new converstaion using the QR or
+              sending a message using WhatsApp app
+              <a
+                class="fetch-image"
+                data-url-image="{!URLFOR($Resource.Wizard,'Resources/images/3_mb_02.png')}"
+                href="javascript: void(0);"
+                >View image</a
+              >
+            </li>
+            <li>Copy the Channel Id and paste it into Channeld Id box</li>
+            <li>Click on save</li>
+          </ul>
+        </apex:pageBlockSection>
+      </apex:pageBlock>
+      <apex:pageBlock>
+        <apex:pageBlockButtons location="bottom">
+          <apex:commandButton
+            onclick="saveSiteUrl();return false"
+            value="Save"
+            style="slds-button_neutral"
+          ></apex:commandButton>
+        </apex:pageBlockButtons>
+        <apex:pageBlockSection
+          title="Site Configuration"
+          columns="1"
+          collapsible="true"
+        >
+          <div class="slds-text-heading_small">
+            To receive inbound messages we need to configure a Salesforce site.
+            Site creates public websites don't require users to log in with a
+            username and password
+          </div>
+          <ul class="slds-list_ordered slds-has-dividers_bottom-space">
+            <li>Go to set up menu</li>
+            <li>Type sites in Quick Find box and click on Sites</li>
+            <li>
+              Enter a new site domain and click on <b>Check Availability</b>
+              <a
+                class="fetch-image"
+                data-url-image="{!URLFOR($Resource.Wizard,'Resources/images/2_site_01.png')}"
+                href="javascript: void(0);"
+                >View image</a
+              >
+            </li>
+            <li>
+              Click on <b>New button</b>. And enter the information for your new
+              site and click on save.
+              <a
+                class="fetch-image"
+                data-url-image="{!URLFOR($Resource.Wizard,'Resources/images/2_site_02.png')}"
+                href="javascript: void(0);"
+                >View image</a
+              >
+            </li>
+            <li>
+              Click on <b>Public Access Settings</b>
+              <a
+                class="fetch-image"
+                data-url-image="{!URLFOR($Resource.Wizard,'Resources/images/2_site_03.png')}"
+                href="javascript: void(0);"
+                >View image</a
+              >
+            </li>
+            <li>Click on <b>Enabled Apex Class Access</b></li>
+            <li>
+              Click on <b>Edit</b>. Search the class
+              <b>MessageBirdWebHook</b> and move it to
+              <b>Enabled Apex Classes</b>
+              <a
+                class="fetch-image"
+                data-url-image="{!URLFOR($Resource.Wizard,'Resources/images/2_site_04.png')}"
+                href="javascript: void(0);"
+                >View image</a
+              >
+            </li>
+            <li>Click on save</li>
+            <li>
+              Back to Site menu and copy the domain name and paste it into next
+              box
+            </li>
+            <li>Click on save</li>
+          </ul>
+          <div id="formSiteUrl" class="slds-form-element">
+            <label class="slds-form-element__label" for="text-input-id-51">
+              <abbr class="slds-required" title="required">* </abbr>Site
+              URL</label
+            >
+            <div class="slds-form-element__control">
+              <input
+                type="text"
+                id="siteUrl"
+                required=""
+                class="slds-input"
+                value=""
+                autocomplete="off"
+              />
+            </div>
+            <div class="slds-form-element__help slds-hide" id="error-siteUrl">
+              Enter a value.
+            </div>
+          </div>
+        </apex:pageBlockSection>
+      </apex:pageBlock>
+      <apex:pageBlock>
+        <apex:pageBlockSection title="Chatting" columns="1" collapsible="true">
+          <div class="slds-text-heading_small">
+            Congratulations!! the configuration is done. Now we can test our
+            MessageBird chat app
+          </div>
+          <ul class="slds-list_ordered slds-has-dividers_bottom-space">
+            <li>Go to Contact App</li>
+            <li>Open the contact Andy Young</li>
+            <li>In the right panel you will see the Chat tab</li>
+            <a
+              class="fetch-image"
+              data-url-image="{!URLFOR($Resource.Wizard,'Resources/images/4_chat_01.png')}"
+              href="javascript: void(0);"
+              >View image</a
+            >
+            <li>
+              This window is to set up the account for MessageBird and set the
+              mobile phone information. Remember, the mobile number is the same
+              used when you set up the WhatsApp sandbox in message bird
+              application. The mobile number should contains the country code to
+              receive and send messages.
+            </li>
+            <li>Click on Start Configuration</li>
+            <li>If there are any previous conversation it will be displayed</li>
+            <a
+              class="fetch-image"
+              data-url-image="{!URLFOR($Resource.Wizard,'Resources/images/4_chat_02.png')}"
+              href="javascript: void(0);"
+              >View image</a
+            >
+            <li>
+              Now, lets chat!!!
+              <a
+                class="fetch-image"
+                data-url-image="{!URLFOR($Resource.Wizard,'Resources/images/4_chat_03.png')}"
+                href="javascript: void(0);"
+                >View image</a
+              >
+              <a
+                class="fetch-image"
+                data-url-image="{!URLFOR($Resource.Wizard,'Resources/images/4_chat_04.jpeg')}"
+                href="javascript: void(0);"
+                >View image</a
+              >
+            </li>
+          </ul>
+          <div class="slds-text-heading_small">
+            The application has another permission set MessageBirdUser. This
+            permission set does not have access to this wizard page. So another
+            user can test without change any configuration.
+          </div>
+        </apex:pageBlockSection>
+      </apex:pageBlock>
+    </apex:form>
+    <section
+      id="popup"
+      role="dialog"
+      tabindex="-1"
+      aria-modal="true"
+      aria-labelledby="modal-heading-01"
+      class="slds-modal slds-fade-in-open slds-hide"
+    >
+      <div
+        class="slds-modal__container"
+        style="width: 80%; max-width: 80rem; min-width: 50rem"
+      >
+        <button
+          id="closePopUp"
+          class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+        >
+          X
+        </button>
+        <div
+          class="slds-modal__content slds-p-around_medium slds-modal__content_headless"
+          style="background-color: transparent"
+        >
+          <img id="imagePopup" />
+        </div>
+      </div>
+    </section>
+    <div
+      id="popupBackground"
+      class="slds-backdrop slds-backdrop_open slds-hide"
+      role="presentation"
+    ></div>
+  </div>
+</apex:page>
