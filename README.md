@@ -7,7 +7,10 @@ Once logged in your Message bird account, the next step is activate your whatsap
 
 Follow this set of instrucctios to install the unamed package in a [free Developer Edition Org](https://developer.salesforce.com/signup). We remommend start from a Brand-new environment to avoid conflicts with any previous work. To execute next commands you need to have sfdx-cli package installed.
 
-1. Download the zip package to a directory of your choise. Open your terminal and change the directory where you downloaded your package previously
+1. Clone the repo
+```
+ git clone https://github.com/Isai-ds/messagebird-chat-challenge.git
+```
 2. Authorize your Developer org and provide it with alias, for example myorg
 
 ```
@@ -17,7 +20,7 @@ Follow this set of instrucctios to install the unamed package in a [free Develop
 3. Run this command to deploy the app
 
 ```
-sfdx force:mdapi:deploy --zipfile mdapi.zip --testlevel RunLocalTests --wait 10 -u myorg
+sfdx force:source:deploy --testlevel RunLocalTests --wait 10 -u myorg
 ```
 
 4. Assign the MessageBirdAdmin permission set to the default user
