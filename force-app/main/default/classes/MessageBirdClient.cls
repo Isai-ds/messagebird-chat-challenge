@@ -129,21 +129,12 @@ public abstract class MessageBirdClient {
   ) {
     String normalizedPath = path.toLowerCase();
     String sb = '';
+    sb += this.getEndpoint();
 
-    // If we've given a fully qualified uri then skip building the endpoint
-    if (
-      normalizedPath.startsWith('http://') ||
-      normalizedPath.startsWith('https://')
-    ) {
-      sb += path;
-    } else {
-      sb += this.getEndpoint();
-
-      if (!normalizedPath.startsWith('/')) {
-        sb += '/';
-      }
-      sb += path;
+    if (!normalizedPath.startsWith('/')) {
+      sb += '/';
     }
+    sb += path;
 
     path = sb;
 

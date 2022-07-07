@@ -2,7 +2,6 @@ public class MessageBirdRestResponse {
   private String responseBody;
   private Integer httpStatus;
   private String url;
-  private String queryString;
   private Boolean error;
   private String contentType;
 
@@ -11,11 +10,7 @@ public class MessageBirdRestResponse {
     String responseBody,
     Integer status
   ) {
-    Pattern p = Pattern.compile('([^?]+)\\??(.*)');
-    Matcher m = p.matcher(url);
-    m.matches();
-    this.url = m.group(1);
-    this.queryString = m.group(2);
+    this.url = url;
     this.responseBody = responseBody;
     this.httpStatus = status;
     this.error = (status >= 400);
